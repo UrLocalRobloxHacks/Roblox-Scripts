@@ -1,1 +1,121 @@
+-- Create the GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "BladeBallHackGUI"
+ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
 
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 200, 0, 140)
+Frame.Position = UDim2.new(0.5, -100, 0.5, -70)
+Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+
+-- Auto Parry Button
+local AutoParryButton = Instance.new("TextButton")
+AutoParryButton.Size = UDim2.new(0, 180, 0, 30)
+AutoParryButton.Position = UDim2.new(0.05, 0, 0.1, 0)
+AutoParryButton.Text = "Auto Parry"
+AutoParryButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoParryButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+AutoParryButton.BorderSizePixel = 0
+AutoParryButton.Parent = Frame
+
+-- Infinite Abilities Button
+local InfiniteAbilitiesButton = Instance.new("TextButton")
+InfiniteAbilitiesButton.Size = UDim2.new(0, 180, 0, 30)
+InfiniteAbilitiesButton.Position = UDim2.new(0.05, 0, 0.35, 0)
+InfiniteAbilitiesButton.Text = "Infinite Abilities"
+InfiniteAbilitiesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfiniteAbilitiesButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+InfiniteAbilitiesButton.BorderSizePixel = 0
+InfiniteAbilitiesButton.Parent = Frame
+
+-- Infinite Jump Button
+local InfiniteJumpButton = Instance.new("TextButton")
+InfiniteJumpButton.Size = UDim2.new(0, 180, 0, 30)
+InfiniteJumpButton.Position = UDim2.new(0.05, 0, 0.6, 0)
+InfiniteJumpButton.Text = "Infinite Jump"
+InfiniteJumpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfiniteJumpButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+InfiniteJumpButton.BorderSizePixel = 0
+InfiniteJumpButton.Parent = Frame
+
+-- Auto Clicker Button
+local AutoClickerButton = Instance.new("TextButton")
+AutoClickerButton.Size = UDim2.new(0, 180, 0, 30)
+AutoClickerButton.Position = UDim2.new(0.05, 0, 0.85, 0)
+AutoClickerButton.Text = "Auto Clicker"
+AutoClickerButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoClickerButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+AutoClickerButton.BorderSizePixel = 0
+AutoClickerButton.Parent = Frame
+
+-- Auto Parry Functionality
+local tool = game.Players.LocalPlayer.Character:WaitForChild("Blade Ball") -- Replace "Blade Ball" with the name of your tool
+local autoParryEnabled = false
+
+AutoParryButton.MouseButton1Click:Connect(function()
+    autoParryEnabled = not autoParryEnabled
+    if autoParryEnabled then
+        AutoParryButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        while autoParryEnabled do
+            tool:Activate()
+            wait()
+        end
+    else
+        AutoParryButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    end
+end)
+
+-- Infinite Abilities Functionality
+local infiniteAbilitiesEnabled = false
+
+InfiniteAbilitiesButton.MouseButton1Click:Connect(function()
+    infiniteAbilitiesEnabled = not infiniteAbilitiesEnabled
+    if infiniteAbilitiesEnabled then
+        InfiniteAbilitiesButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        -- Add code here to enable infinite abilities
+    else
+        InfiniteAbilitiesButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        -- Add code here to disable infinite abilities
+    end
+end)
+
+-- Infinite Jump Functionality
+local infiniteJumpEnabled = false
+
+InfiniteJumpButton.MouseButton1Click:Connect(function()
+    infiniteJumpEnabled = not infiniteJumpEnabled
+    if infiniteJumpEnabled then
+        InfiniteJumpButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        game:GetService("UserInputService").JumpRequest:Connect(function()
+            game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+        end)
+    else
+        InfiniteJumpButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    end
+end)
+
+-- Auto Clicker Functionality
+local autoClickerEnabled = false
+local inputService = game:GetService("UserInputService")
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+AutoClickerButton.MouseButton1Click:Connect(function()
+    autoClickerEnabled = not autoClickerEnabled
+    if autoClickerEnabled then
+        AutoClickerButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        local clickerButton = Enum.UserInputType.MouseButton1 -- Change to the desired mouse button
+
+        inputService.InputBegan:Connect(function(input)
+            if input.UserInputType == clickerButton then
+                while autoClickerEnabled do
+                    mouse.Click:Wait()
+                    wait() -- Adjust the delay between clicks if needed
+                end
+            end
+        end)
+    else
+        AutoClickerButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    end
+end)
